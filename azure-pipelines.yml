@@ -4,15 +4,16 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+   - group: quay.io
+
+steps:
+- script:  "echo $REGISTRY"
+  displayName:  Check libarary variables
+  
 
 - script:  "sudo docker info"
   displayName:  'Docker Engine Test'
+
 
