@@ -4,16 +4,21 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-
-variables:
-   - group: quay.io
-
 steps:
-- script:  "echo $REGISTRY"
-  displayName:  Check libarary variables
-  
+  - task: Docker@2
+    displayName: "Login docker registry"
+    inputs:
+       command: login
+       containerRegistry: quay.io
 
-- script:  "sudo docker info"
-  displayName:  'Docker Engine Test'
+  - task: Docker@3
+    displayName: "Build and push  docker image"
+    inputs:
+      Dockerfile: "**/v0.12.24/Dockerfile"
+      command: buildAndPush
+      repository: ci-container-images/terraform
+      tags: |
+        v0.12.24
+
 
 
