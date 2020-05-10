@@ -1,15 +1,18 @@
 FROM quay.io/ci-container-images/terraform-bundle:v1.0.0
-ENV OCP_RELEASE="4.3.3"
 
 ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
+    mkdir -p ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64 && \
+    curl -L -o ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
+    chmod +x ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64/terraform-provider-minio_v1.1.0 && \
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
     unzip terraform*.zip   -d ./terraform-bundle
 
 
-FROM registry.access.redhat.com/ubi8/ubi:8.1-277
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 ENV TZ="Europe/Moscow"
+ENV OCP_RELEASE="4.3.3"
 ADD ./centos-apps.repo  /etc/yum.repos.d/
 RUN mkdir /terraform && ln -s /terraform/terraform /bin/terraform && \
     yum -y install git-core
