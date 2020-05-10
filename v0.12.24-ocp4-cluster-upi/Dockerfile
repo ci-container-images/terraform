@@ -20,7 +20,7 @@ RUN curl -L  -o /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd6
     chmod +x /usr/local/bin/mc
 #Install openshift-install
 RUN cd /tmp && \
-    curl -L -O /usr/local/bin/openshift-install  https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OCP_RELEASE}/openshift-install-linux-${OCP_RELEASE}.tar.gz && \
+    curl -L -O   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OCP_RELEASE}/openshift-install-linux-${OCP_RELEASE}.tar.gz && \
     tar -xzf openshift-install-linux-${OCP_RELEASE}.tar.gz && \
     chmod +x openshift-install && \
     mv ./openshift-install /usr/local/bin/
