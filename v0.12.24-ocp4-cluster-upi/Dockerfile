@@ -2,9 +2,8 @@ FROM quay.io/ci-container-images/terraform-bundle:v1.0.0
 
 ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
-    mkdir -p ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64 && \
-    curl -L -o ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
-    chmod +x ./plugins/github.com/aminuez/minio/1.1.0/linux_amd64/terraform-provider-minio_v1.1.0 && \
+    mkdir -p ./plugins && \
+    curl -L -o ./plugins/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
     unzip terraform*.zip   -d ./terraform-bundle
