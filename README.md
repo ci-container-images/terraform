@@ -1,2 +1,2 @@
 # terraform
-Custom terraform CI image
+Custom terraform CI images
