@@ -29,10 +29,9 @@ RUN cd /tmp && \
 RUN  yum -y install  xorriso && \
      yum clean all
 
-RUN mkdir /terraform-workspace && \
-    chmod +x  /terraform/*
+RUN mkdir /terraform-workspace
 COPY --from=0 /tmp/terraform-bundle/  /terraform/
-
+RUN chmod +x  /terraform/*
 WORKDIR /terraform-workspace
 CMD ["/bin/bash"]
 
