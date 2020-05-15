@@ -4,7 +4,6 @@ ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
     mkdir -p ./plugins && \
     curl -L -o ./plugins/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
-    chmod +x ./plugins/terraform-provider-minio_v1.1.0 && \
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
     unzip terraform*.zip   -d ./terraform-bundle
@@ -30,7 +29,8 @@ RUN cd /tmp && \
 RUN  yum -y install  xorriso && \
      yum clean all
 
-RUN mkdir /terraform-workspace
+RUN mkdir /terraform-workspace && \
+    chmod +x  /terraform/*
 COPY --from=0 /tmp/terraform-bundle/  /terraform/
 
 WORKDIR /terraform-workspace

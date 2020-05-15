@@ -22,7 +22,7 @@ steps:
 
 
   - task: Docker@2
-    displayName: "Build and push  terraform image for gitlab-group module"
+    displayName: "Build and push  terraform image for OpenShift UPI provisioning environment"
     inputs:
       Dockerfile: "**/v0.12.24-ocp4-cluster-upi/Dockerfile"
       command: buildAndPush
