@@ -9,17 +9,18 @@ RUN cd /tmp  && \
 
 
 FROM docker.io/fedora:32
-ENV OCP_RELEASE="4.3.3"
+ENV OCP_RELEASE="4.4.3"
 RUN dnf -y install  p7zip p7zip-plugins && \
     mkdir /tmp/rhcos-installer-iso && \
     cd /tmp/rhcos-installer-iso && \
     curl -O https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-${OCP_RELEASE}-x86_64-installer.x86_64.iso && \
     7z x *.iso && \
-    rm -f *.iso
+    rm -f *.iso && \
+    rm -rf '[BOOT]'
 
 FROM registry.access.redhat.com/ubi8/ubi:8.2
 ENV TZ="Europe/Moscow"
-ENV OCP_RELEASE="4.3.3"
+ENV OCP_RELEASE="4.4.3"
 ENV EXTRACTED_ISO_IMAGE="/rhcos-installer-iso"
 ADD ./centos-apps.repo  /etc/yum.repos.d/
 #Prepare directories
