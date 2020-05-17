@@ -4,7 +4,7 @@ trigger:
       - master
   paths:
     include:
-      - v0.12.24/*
+      - v0.12.24-ocp4-cluster-upi/*
 
 pool:
   vmImage: 'ubuntu-latest'
