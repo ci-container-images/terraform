@@ -14,7 +14,7 @@ RUN dnf -y install  p7zip p7zip-plugins && \
     mkdir /tmp/rhcos-installer-iso && \
     cd /tmp/rhcos-installer-iso && \
     curl -O https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-${OCP_RELEASE}-x86_64-installer.x86_64.iso && \
-    7z *.iso && \
+    7z x *.iso && \
     rm -f *.iso
 
 FROM registry.access.redhat.com/ubi8/ubi:8.2
