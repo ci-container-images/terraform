@@ -1,5 +1,4 @@
 FROM quay.io/ci-container-images/terraform-bundle:v1.0.0
-
 ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
     mkdir -p ./plugins && \
@@ -9,12 +8,25 @@ RUN cd /tmp  && \
     unzip terraform*.zip   -d ./terraform-bundle
 
 
+FROM docker.io/fedora:32
+ENV OCP_RELEASE="4.3.3"
+RUN dnf -y install  p7zip p7zip-plugins && \
+    mkdir /tmp/rhcos-installer-iso && \
+    cd /tmp/rhcos-installer-iso && \
+    curl -O https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-${OCP_RELEASE}-x86_64-installer.x86_64.iso && \
+    7z *.iso && \
+    rm -f *.iso
+
 FROM registry.access.redhat.com/ubi8/ubi:8.2
 ENV TZ="Europe/Moscow"
 ENV OCP_RELEASE="4.3.3"
+ENV EXTRACTED_ISO_IMAGE="/rhcos-installer-iso"
 ADD ./centos-apps.repo  /etc/yum.repos.d/
-RUN mkdir /terraform && ln -s /terraform/terraform /bin/terraform && \
-    yum -y install git-core
+#Prepare directories
+RUN mkdir /terraform && \
+    mkdir /terraform-workspace && \
+    ln -s /terraform/terraform /bin/terraform
+
 #Install minio s3 client
 RUN curl -L  -o /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc && \
     chmod +x /usr/local/bin/mc
@@ -24,14 +36,17 @@ RUN cd /tmp && \
     tar -xzf openshift-install-linux-${OCP_RELEASE}.tar.gz && \
     chmod +x openshift-install && \
     mv ./openshift-install /usr/local/bin/
+#Add OpenShift extracted ISO image content
+COPY --from=1 /tmp/rhcos-installer-iso  ${EXTRACTED_ISO_IMAGE}
 
-#Install xorriso tools from centos repository http://mirror.centos.org/centos/8/AppStream/x86_64/os/
-RUN  yum -y install  xorriso && \
+#Install xorriso tools from centos repository http://mirror.centos.org/centos/8/AppStream/x86_64/os/ and git core tools
+RUN  yum -y install  xorriso git-core && \
      yum clean all
 
-RUN mkdir /terraform-workspace
+#Add terraform bundle and make all binaries exacutable
 COPY --from=0 /tmp/terraform-bundle/  /terraform/
 RUN chmod +x  /terraform/*
+
 WORKDIR /terraform-workspace
 CMD ["/bin/bash"]
 
