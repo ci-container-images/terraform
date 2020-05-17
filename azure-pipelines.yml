@@ -4,7 +4,7 @@ trigger:
       - master
   paths:
     include:
-      - "v0.12.24/*"
+      - v0.12.24/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -24,6 +24,7 @@ steps:
       repository: ci-container-images/terraform
       tags: |
         v0.12.24
+    
 
 
   - task: Docker@2
