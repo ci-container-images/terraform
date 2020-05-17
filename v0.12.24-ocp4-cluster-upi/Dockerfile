@@ -2,7 +2,14 @@ FROM quay.io/ci-container-images/terraform-bundle:v1.0.0
 ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
     mkdir -p ./plugins && \
+    #Install Minio S3 provider
     curl -L -o ./plugins/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
+    #Install Ignition configuration provider
+    cd ./plugins
+    curl  ./plugins/ https://github.com/poseidon/terraform-provider-ct/releases/download/0.5.0/terraform-provider-ct-0.5.0-linux-amd64.tar.gz
+    tar xzf terraform-provider-ct-0.5.0-linux-amd64.tar.gz
+    mv terraform-provider-ct-0.5.0-linux-amd64/terraform-provider-ct ./terraform-provider-ct_0.5.0
+    ######
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
     unzip terraform*.zip   -d ./terraform-bundle
@@ -36,7 +43,8 @@ RUN cd /tmp && \
     curl -L -O   https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OCP_RELEASE}/openshift-install-linux-${OCP_RELEASE}.tar.gz && \
     tar -xzf openshift-install-linux-${OCP_RELEASE}.tar.gz && \
     chmod +x openshift-install && \
-    mv ./openshift-install /usr/local/bin/
+    mv ./openshift-install /usr/local/bin/ && \
+    rm -f openshift-install-linux-${OCP_RELEASE}.tar.gz
 #Add OpenShift extracted ISO image content
 COPY --from=1 /tmp/rhcos-installer-iso  ${EXTRACTED_ISO_IMAGE}
 
