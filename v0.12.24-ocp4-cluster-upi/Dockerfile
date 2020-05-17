@@ -6,9 +6,9 @@ RUN cd /tmp  && \
     curl -L -o ./plugins/terraform-provider-minio_v1.1.0  https://github.com/aminueza/terraform-provider-minio/releases/download/v1.1.0/terraform-provider-minio_v1.1.0_linux_amd64 && \
     #Install Ignition configuration provider
     cd ./plugins && \
-    curl -L -O https://github.com/poseidon/terraform-provider-ct/releases/download/0.5.0/terraform-provider-ct-0.5.0-linux-amd64.tar.gz && \
-    tar xzf terraform-provider-ct-0.5.0-linux-amd64.tar.gz && \
-    mv terraform-provider-ct-0.5.0-linux-amd64/terraform-provider-ct ./terraform-provider-ct_0.5.0 && \
+    curl -L -O https://github.com/poseidon/terraform-provider-ct/releases/download/v0.5.0/terraform-provider-ct-v0.5.0-linux-amd64.tar.gz && \
+    tar xzf terraform-provider-ct-v0.5.0-linux-amd64.tar.gz && \
+    mv terraform-provider-ct-v0.5.0-linux-amd64/terraform-provider-ct ./terraform-provider-ct_v0.5.0 && \
     ######
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
