@@ -8,7 +8,7 @@ RUN cd /tmp  && \
     cd ./plugins && \
     curl  ./plugins/ https://github.com/poseidon/terraform-provider-ct/releases/download/0.5.0/terraform-provider-ct-0.5.0-linux-amd64.tar.gz && \
     tar xzf terraform-provider-ct-0.5.0-linux-amd64.tar.gz && \
-    mv terraform-provider-ct-0.5.0-linux-amd64/terraform-provider-ct ./terraform-provider-ct_0.5.0
+    mv terraform-provider-ct-0.5.0-linux-amd64/terraform-provider-ct ./terraform-provider-ct_0.5.0 && \
     ######
     terraform-bundle package terraform-bundle.hcl  && \
     mkdir terraform-bundle && \
