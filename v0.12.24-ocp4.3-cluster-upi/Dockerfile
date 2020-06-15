@@ -26,6 +26,7 @@ RUN dnf -y install  p7zip p7zip-plugins && \
     rm -f *.iso && \
     rm -rf '[BOOT]'
 
+
 FROM registry.access.redhat.com/ubi8/ubi:8.2
 ENV TZ="Europe/Moscow"
 ENV OCP_RELEASE="4.4.3"
