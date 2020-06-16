@@ -16,6 +16,7 @@ RUN cd /tmp  && \
     unzip terraform*.zip   -d ./terraform-bundle
 
 
+
 FROM docker.io/fedora:32
 ENV OCP_RELEASE="4.4.3"
 RUN dnf -y install  p7zip p7zip-plugins && \
@@ -25,6 +26,7 @@ RUN dnf -y install  p7zip p7zip-plugins && \
     7z x *.iso && \
     rm -f *.iso && \
     rm -rf '[BOOT]'
+
 
 FROM registry.access.redhat.com/ubi8/ubi:8.2
 ENV TZ="Europe/Moscow"

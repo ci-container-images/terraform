@@ -19,7 +19,7 @@ jobs:
         run: docker login $REGISTRY  -u ${{ secrets.USERNAME }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build . --file v0.12.24-ocp4.3-cluster-upi/Dockerfile --tag $REGISTRY/$GITHUB_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+        run: cd v0.12.24-ocp4.3-cluster-upi && docker build --tag $REGISTRY/$GITHUB_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
 
       - name: Push image
         run: docker push $REGISTRY/$GITHUB_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
