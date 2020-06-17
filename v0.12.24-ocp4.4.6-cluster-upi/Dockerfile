@@ -1,3 +1,4 @@
+
 FROM quay.io/ci-container-images/terraform-bundle:v1.0.0
 ADD ./terraform-bundle.hcl  /tmp/
 RUN cd /tmp  && \
