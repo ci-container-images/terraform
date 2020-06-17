@@ -18,7 +18,7 @@ RUN cd /tmp  && \
 
 
 FROM docker.io/fedora:32
-ENV OCP_RELEASE="4.4.6"
+ENV OCP_RELEASE="4.4.3"
 RUN dnf -y install  p7zip p7zip-plugins && \
     mkdir /tmp/rhcos-installer-iso && \
     cd /tmp/rhcos-installer-iso && \
